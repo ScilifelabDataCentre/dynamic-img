@@ -14,10 +14,15 @@ cors = CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/wordcloud_<field>.png')
 @cache.cached(timeout=86400)
-def gen_wordcloud_abs(field):
+def gen_wordcloud(field):
     if field in ('title', 'abstract'):
         img = lwc.gen_wordcloud(field)
     else:
         return flask.Response(status=404)
     img.seek(0)
     return flask.send_file(img, mimetype='image/png')
+
+
+@app.route('/heartbeat')
+def heartbeat():
+    return flask.Response(status=200)
