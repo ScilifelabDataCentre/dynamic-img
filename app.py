@@ -1,6 +1,8 @@
 """
 Endpoints for generating dynamic images, e.g. plots.
 """
+import logging
+
 import flask
 from flask_caching import Cache
 from flask_cors import CORS
@@ -26,3 +28,12 @@ def gen_wordcloud(field):
 @app.route('/heartbeat')
 def heartbeat():
     return flask.Response(status=200)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+else:
+    # Assume this means it's handled by gunicorn
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
