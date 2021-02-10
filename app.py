@@ -13,11 +13,12 @@ app = flask.Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 cors = CORS(app, resources={r'/*': {'origins': '*'}})
 
+WC_SUPPORTED_FIELDS = ('title', 'abstract')
 
 @app.route('/wordcloud_<field>.png')
-@cache.cached(timeout=86400)
+@cache.cached(timeout=604800)
 def gen_wordcloud(field):
-    if field in ('title', 'abstract'):
+    if field in WC_SUPPORTED_FIELDS:
         img = lwc.gen_wordcloud(field)
     else:
         return flask.Response(status=404)
