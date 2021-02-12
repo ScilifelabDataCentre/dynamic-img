@@ -28,7 +28,7 @@ def gen_wordcloud(field="title"):
     # normalisation at this level accesses title/abstract
     # authors requires further 'digging' in the .json
     df = pd.json_normalize(txt["publications"])
-    df.replace("antibody", "antibodies",regex=True, inplace=True)
+    df.replace("antibody", "antibodies", regex=True, inplace=True)
 
     # add whatever words you'd like to exclude
     stopwords = list(STOPWORDS) + ["None", "s", "may", "two", "P", "CI",
@@ -85,7 +85,7 @@ def gen_wordcloud(field="title"):
 
     img = io.BytesIO()
 
-    # savefig will save the figure (resolution 300dpi - good enoough for print)
+    # savefig will save the figure (resolution 300dpi - good enough for print)
     plt.savefig(img, dpi=300)
 
     return img
